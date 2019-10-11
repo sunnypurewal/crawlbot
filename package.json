@@ -1,0 +1,29 @@
+{
+  "name": "crawlbot",
+  "version": "0.1.0",
+  "description": "The simplest Node.js web crawling library",
+  "keywords": [
+    "crawl",
+    "scrape",
+    "webcrawl"
+  ],
+  "homepage": "https://github.com/sunnypurewal/crawlbot",
+  "bugs": {
+    "url": "https://github.com/sunnypurewal/crawlbot/issues",
+    "email": "sunnypurewal@gmail.com"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sunny Purewal <sunnypurewal@gmail.com> (http://sunnypurewal.me)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "github:sunnypurewal/crawlbot.git"
+  },
+  "dependencies": {
+    "getsitemap": "^0.4.0",
+    "hittp": "^0.2.7"
+  }
+}
