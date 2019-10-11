@@ -3,9 +3,8 @@ const hittp = require("hittp")
 const getsitemap = require("getsitemap")
 
 const crawl = (url, since) => {
-  console.log("Crawling", url, "from", since)
   if (!url) return
-  const mapper = new getsitemap.SiteMapper(true)
+  const mapper = new getsitemap.SiteMapper()
   mapper.map(url, since).then((sitemapstream) => {
     sitemapstream.on("data", (chunk) => {
       const chunkstring = chunk.toString()
