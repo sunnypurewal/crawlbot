@@ -5,6 +5,7 @@ const getsitemap = require("getsitemap")
 const crawl = (url, since) => {
   if (!url) return
   const mapper = new getsitemap.SiteMapper()
+  mapper.configure({cachePath: null})
   mapper.map(url, since).then((sitemapstream) => {
     sitemapstream.on("data", (chunk) => {
       const chunkstring = chunk.toString()

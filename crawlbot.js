@@ -9,7 +9,7 @@ const crawl = (domain, since, onHTML, onExit) => {
     onHTML(msg.body.html, msg.body.url)
   })
   forked.on("exit", (code, signal) => {
-    if (onExit) onExit(forked, code, signal)
+    if (onExit) onExit(domain, forked, code, signal)
   })
   return forked
 }
