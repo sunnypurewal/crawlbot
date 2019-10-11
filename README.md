@@ -18,5 +18,6 @@ const onExit = (code, signal) => {
 crawlbot.crawl("qz.com", "2019-10-11", onHTML, onExit)
 
 const forkedProcess = crawlbot.crawl("qz.com", "2019-10-11", onHTML, onExit)
+/* forkedProcess.kill() // This will kill the crawler */
 ```
 `crawl(...)` will fork a Node.js process that parses `domain`'s sitemap and calls `onHTML(html,url)` every time it downloads a page.
