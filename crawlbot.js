@@ -10,6 +10,7 @@ const crawl = (domain, since, onHTML, onExit) => {
   forked.on("exit", (code, signal) => {
     onExit(code, signal)
   })
+  return forked
 }
 
 module.exports = {
