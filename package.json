@@ -1,6 +1,6 @@
 {
   "name": "crawlbot",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "The simplest Node.js web crawling library",
   "keywords": [
     "crawl",
@@ -24,6 +24,6 @@
   },
   "dependencies": {
     "getsitemap": "^0.5.0",
-    "hittp": "^0.3.1"
+    "hittp": "file:../hittp"
   }
 }

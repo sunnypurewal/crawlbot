@@ -13,7 +13,7 @@ const crawl = (url, since) => {
       try {
         chunkobj = JSON.parse(chunkstring)
       } catch (err) {
-        console.error(err.message)
+        // console.error(err)
         return
       }
       const url = hittp.str2url(chunkobj.loc)
@@ -22,13 +22,13 @@ const crawl = (url, since) => {
         html = html.toString()
         process.send({ event: "pagecrawled", body: {url:url.href, html}})
       }).catch((err) => {
-        console.error(err.message)
+        // console.error(err)
       })
     })
     sitemapstream.on("close", () => {
     })
   }).catch((err) => {
-    console.error(err.message)
+    // console.error(err)
   })
 }
 
@@ -43,10 +43,10 @@ let date = process.argv[3]
 let parsedDate = null
 if (typeof(date) === "string") {
   parsedDate = Date.parse(date)
-  if (parsedDate === NaN) {
+  if (isNaN(parsedDate)) {
     parsedDate = Date.parse(parseFloat(date))
   }
-  if (parsedDate === NaN) {
+  if (isNaN(parsedDate)) {
     throw new Error("Invalid date string supplied for 'since' parameter")
   }
 } else {
