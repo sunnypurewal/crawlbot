@@ -3,14 +3,14 @@ const { fork } = require("child_process")
 const path = require('path')
 const hittp = require("hittp")
 
-const multicrawl = (domains, since, onHTML, onExit) => {
+const multicrawl = (domains, since) => {
   if (typeof(since) !== "string") {
     since = since.toString()
   }
   const args = []
   for (const domain of domains) {
     let url = hittp.str2url(domain)
-    if (domain) args.push(url.href)
+    if (url) args.push(url.href)
   }
   // console.log("FORKING", urlargs)
   args.push(since)

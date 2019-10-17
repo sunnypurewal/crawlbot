@@ -5,12 +5,11 @@ const fs = require("fs")
 const article = require("article")
 const os = require("os")
 
-const crawl = (url, since) => {
+const crawl = (url, since, file) => {
   if (!url) return
   const mapper = new getsitemap.SiteMapper()
   // mapper.configure({cachePath: null})
   console.log("Crawling", url.href || url)
-  const file = fs.createWriteStream(`./data/articles/${url.host}.txt`)
   mapper.map(url, since).then((sitemapstream) => {
     sitemapstream.on("data", (chunk) => {
       const chunkstring = chunk.toString()
@@ -18,22 +17,22 @@ const crawl = (url, since) => {
       const pageurl = hittp.str2url(split[0])
       if (!pageurl) return
       hittp.stream(pageurl).then((httpstream) => {
-        httpstream.pipe(article(pageurl.href, (err, result) => {
-          if (!err) {
-            file.write(`${pageurl.href}|||||${result.title}|||||${result.text}${os.EOL}`)
-          }
-        }))
+        // httpstream.pipe(article(pageurl.href, (err, result) => {
+        //   if (!err) {
+        //     file.write(`${pageurl.href}|||||${result.title}|||||${result.text}|||||`)
+        //   }
+        // }))
+      }).catch((err) => {
+        //console.error(err.message)
       })
     })
     sitemapstream.on("close", () => {
-      console.log("Finished crawling", url.href || url)
+      // console.log("Enqueued all URLs from sitemap", url.href || url)
     })
   }).catch((err) => {
     // console.error(err)
   })
 }
-
-
 
 if (process.argv.length < 4) {
   throw new Error("Not enough arguments to 'crawl.js'.\nnode crawl.js <domain> <since>\nExample: node crawl.js cnn.com 2019-10-10")
@@ -73,12 +72,13 @@ if (process.argv.length < 4) {
     throw new Error("Invalid type supplied for 'since' parameter, must be string")
   }
 
+  const file = fs.createWriteStream(`./data/mass-${Date.now()*Math.random()}.txt`)
   for (let i = 2; i < argCount-1; i++) {
     let url = hittp.str2url(process.argv[i])
     if (!url) {
      console.error("Invalid URL supplied for 'domain' parameter")
      continue
     }
-    crawl(url, parsedDate)
+    crawl(url, parsedDate, file)
   }
 }
