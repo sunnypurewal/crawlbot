@@ -3,6 +3,27 @@ const { fork } = require("child_process")
 const path = require('path')
 const hittp = require("hittp")
 
+const multicrawl = (domains, since, onHTML, onExit) => {
+  if (typeof(since) !== "string") {
+    since = since.toString()
+  }
+  const args = []
+  for (const domain of domains) {
+    let url = hittp.str2url(domain)
+    if (domain) args.push(url.href)
+  }
+  // console.log("FORKING", urlargs)
+  args.push(since)
+  const forked = fork(path.join(path.dirname(__filename), "./crawlprocess.js"), args)
+  forked.on("message", (msg) => {
+    onHTML(msg.body.html, hittp.str2url(msg.body.url))
+  })
+  forked.on("exit", (code, signal) => {
+    if (onExit) onExit(null, forked, code, signal)
+  })
+  return forked
+}
+
 const crawl = (domain, since, onHTML, onExit) => {
   let url = hittp.str2url(domain)
   if (!url) {
@@ -23,5 +44,6 @@ const crawl = (domain, since, onHTML, onExit) => {
 }
 
 module.exports = {
-  crawl
+  crawl,
+  multicrawl
 }

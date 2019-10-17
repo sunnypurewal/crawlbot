@@ -23,7 +23,8 @@
     "url": "github:sunnypurewal/crawlbot.git"
   },
   "dependencies": {
-    "getsitemap": "^0.5.0",
-    "hittp": "^0.3.2"
+    "article": "^1.1.2",
+    "getsitemap": "file:../getsitemap",
+    "hittp": "file:../hittp"
   }
 }

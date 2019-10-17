@@ -3,5 +3,6 @@
 const crawlbot = require("./crawlbot")
 
 module.exports = {
-  crawl: crawlbot.crawl
+  crawl: crawlbot.crawl,
+  multicrawl: crawlbot.multicrawl
 }
