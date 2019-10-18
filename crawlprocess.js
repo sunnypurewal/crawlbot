@@ -2,8 +2,7 @@
 const hittp = require("hittp")
 const getsitemap = require("getsitemap")
 const fs = require("fs")
-const article = require("article")
-const os = require("os")
+const Mercury = require("@postlight/mercury-parser")
 
 const crawl = (url, since, file) => {
   if (!url) return
@@ -16,7 +15,11 @@ const crawl = (url, since, file) => {
       const split = chunkstring.split("|")
       const pageurl = hittp.str2url(split[0])
       if (!pageurl) return
-      hittp.stream(pageurl).then((httpstream) => {
+      // hittp.stream(pageurl).then((httpstream) => {
+      hittp.get(pageurl).then((html) => {
+        Mercury.parse(pageurl.href, {html, contentType:"text"}).then((article) => {
+          file.write(`${pageurl.href}||${article.title}||${article.content}||${article.date_published}||${article.author}`)
+        })
         // httpstream.pipe(article(pageurl.href, (err, result) => {
         //   if (!err) {
         //     file.write(`${pageurl.href}|||||${result.title}|||||${result.text}|||||`)
